@@ -103,7 +103,7 @@
         public consuming func take() -> (pointer: UnsafeMutablePointer<String.Char>, count: Int) {
             var captured: (pointer: UnsafeMutablePointer<String.Char>, count: Int)? = nil
             _ = Self.map(self) { (str: consuming String) -> Bool in
-                unsafe (captured = unsafe str.take())
+                unsafe (captured = str.take())
                 return true
             }
             guard let result = unsafe captured else {

@@ -45,7 +45,7 @@
     ///
     /// - Not shareable; single-owner semantics.
     @safe
-    public struct String: ~Copyable, @unsafe @unchecked Sendable {
+    public struct String: ~Copyable, Sendable {
         /// The underlying owned byte region.
         ///
         /// `Memory.Heap` owns the raw allocation and deallocates on destruction. Its byte
@@ -56,7 +56,9 @@
         /// the real allocation but one `Char` beyond the tracked capacity, exactly as before.
         @usableFromInline
         internal let _storage: Memory.Heap
+    }
 
+    extension String {
         /// The length in code units, excluding the null terminator.
         @inlinable
         public var count: Int {
@@ -111,7 +113,7 @@
         public init(_ span: Swift.Span<Char>) {
             let length = span.count
             let buffer = UnsafeMutablePointer<Char>.allocate(capacity: length + 1)
-            for i in 0..<length { (unsafe buffer)[i] = span[i] }
+            (0..<length).forEach { i in (unsafe buffer)[i] = span[i] }
             (unsafe buffer)[length] = Self.terminator
             unsafe self._storage = Memory.Heap(
                 adopting: UnsafeMutableRawPointer(buffer),
@@ -134,7 +136,7 @@
             let length = literal.utf8CodeUnitCount
             let buffer = UnsafeMutablePointer<String.Char>.allocate(capacity: length + 1)
             literal.withUTF8Buffer { utf8 in
-                for i in 0..<length {
+                (0..<length).forEach { i in
                     let byte = unsafe utf8[i]
                     precondition(byte < 0x80, "String.init(ascii:): literal contains non-ASCII byte 0x\(Swift.String(byte, radix: 16, uppercase: true)) at index \(i)")
                     (unsafe buffer)[i] = Self.Char(byte)

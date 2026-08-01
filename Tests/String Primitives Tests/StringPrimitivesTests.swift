@@ -14,9 +14,15 @@ import Testing
 @testable import String_Primitives
 
 @Suite
-struct StringPrimitivesTests {
+struct `String Primitives Tests` {
+    @Suite struct Unit {}
+    @Suite struct `Edge Case` {}
+    @Suite struct Integration {}
+}
+
+extension `String Primitives Tests`.Unit {
     @Test
-    func lengthOfEmptyString() {
+    func `length of empty string`() {
         let empty: [String_Primitives.String.Char] = [String_Primitives.String.terminator]
         unsafe empty.withUnsafeBufferPointer { buffer in
             let length = unsafe String_Primitives.String.length(of: buffer.baseAddress!)
@@ -25,7 +31,7 @@ struct StringPrimitivesTests {
     }
 
     @Test
-    func lengthOfNonEmptyString() {
+    func `length of non-empty string`() {
         // "hello" = [104, 101, 108, 108, 111, 0]
         let hello: [String_Primitives.String.Char] = [104, 101, 108, 108, 111, String_Primitives.String.terminator]
         unsafe hello.withUnsafeBufferPointer { buffer in
