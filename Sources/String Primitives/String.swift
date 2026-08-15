@@ -83,7 +83,10 @@
         @inlinable
         public init(adopting pointer: UnsafeMutablePointer<String.Char>, count: Int) {
             #if DEBUG
-                precondition(unsafe pointer[count] == Self.terminator, "String: adopted buffer must be null-terminated")
+                precondition(
+                    unsafe pointer[count] == Self.terminator,
+                    "String: adopted buffer must be null-terminated"
+                )
             #endif
             unsafe self._storage = Memory.Heap(
                 adopting: UnsafeMutableRawPointer(pointer),
@@ -138,7 +141,10 @@
             literal.withUTF8Buffer { utf8 in
                 (0..<length).forEach { i in
                     let byte = unsafe utf8[i]
-                    precondition(byte < 0x80, "String.init(ascii:): literal contains non-ASCII byte 0x\(Swift.String(byte, radix: 16, uppercase: true)) at index \(i)")
+                    precondition(
+                        byte < 0x80,
+                        "String.init(ascii:): literal contains non-ASCII byte 0x\(Swift.String(byte, radix: 16, uppercase: true)) at index \(i)"
+                    )
                     (unsafe buffer)[i] = Self.Char(byte)
                 }
             }

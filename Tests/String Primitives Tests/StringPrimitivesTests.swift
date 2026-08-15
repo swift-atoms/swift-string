@@ -33,7 +33,9 @@ extension `String Primitives Tests`.Unit {
     @Test
     func `length of non-empty string`() {
         // "hello" = [104, 101, 108, 108, 111, 0]
-        let hello: [String_Primitives.String.Char] = [104, 101, 108, 108, 111, String_Primitives.String.terminator]
+        let hello: [String_Primitives.String.Char] = [
+            104, 101, 108, 108, 111, String_Primitives.String.terminator,
+        ]
         unsafe hello.withUnsafeBufferPointer { buffer in
             let length = unsafe String_Primitives.String.length(of: buffer.baseAddress!)
             #expect(length == 5)

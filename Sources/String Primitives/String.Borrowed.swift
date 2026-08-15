@@ -77,7 +77,9 @@
                     unsafe (current = current.successor())
                     scanned += 1
                 }
-                assertionFailure("String.Borrowed: pointer does not appear to be null-terminated within \(maxDebugScanLength) bytes")
+                assertionFailure(
+                    "String.Borrowed: pointer does not appear to be null-terminated within \(maxDebugScanLength) bytes"
+                )
             }
         }
     #endif
