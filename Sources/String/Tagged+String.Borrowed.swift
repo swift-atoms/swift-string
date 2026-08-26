@@ -1,6 +1,6 @@
-#if STRING_PRIMITIVES_AVAILABLE && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux) || os(Android) || os(OpenBSD) || os(Windows))
+#if STRING_AVAILABLE && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux) || os(Android) || os(OpenBSD) || os(Windows))
 
-    public import Tagged_Primitives
+    public import Tagged
 
     extension Tagged where Underlying == String, Tag: ~Copyable & ~Escapable {
 

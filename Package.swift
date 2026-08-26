@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-string-primitives",
+    name: "swift-string",
     platforms: [
         .macOS(.v27),
         .iOS(.v27),
@@ -13,44 +13,44 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "String Primitives",
-            targets: ["String Primitives"]
+            name: "String",
+            targets: ["String"]
         ),
         .library(
-            name: "String Primitives Test Support",
-            targets: ["String Primitives Test Support"]
+            name: "String Test Support",
+            targets: ["String Test Support"]
         ),
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-memory-heap-primitives.git",
+            url: "https://github.com/swift-molecules/swift-memory-heap.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-span-primitives.git",
+            url: "https://github.com/swift-molecules/swift-span.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-tagged-primitives.git",
+            url: "https://github.com/swift-molecules/swift-tagged.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-ownership-primitives.git",
+            url: "https://github.com/swift-molecules/swift-ownership.git",
             branch: "main"
         ),
     ],
     targets: [
         .target(
-            name: "String Primitives",
+            name: "String",
             dependencies: [
-                .product(name: "Memory Heap Primitives", package: "swift-memory-heap-primitives"),
-                .product(name: "Span Protocol Primitives", package: "swift-span-primitives"),
-                .product(name: "Tagged Primitives", package: "swift-tagged-primitives"),
-                .product(name: "Ownership Primitives", package: "swift-ownership-primitives"),
+                .product(name: "Memory Heap", package: "swift-memory-heap"),
+                .product(name: "Span Protocol", package: "swift-span"),
+                .product(name: "Tagged", package: "swift-tagged"),
+                .product(name: "Ownership", package: "swift-ownership"),
             ],
             swiftSettings: [
                 .define(
-                    "STRING_PRIMITIVES_AVAILABLE",
+                    "STRING_AVAILABLE",
                     .when(platforms: [
                         .macOS, .iOS, .tvOS, .watchOS, .visionOS,
                         .linux, .windows, .android, .openbsd,
@@ -59,21 +59,21 @@ let package = Package(
             ]
         ),
         .target(
-            name: "String Primitives Test Support",
+            name: "String Test Support",
             dependencies: [
-                "String Primitives",
+                "String",
                 .product(
-                    name: "Tagged Primitives Test Support",
-                    package: "swift-tagged-primitives"
+                    name: "Tagged Test Support",
+                    package: "swift-tagged"
                 ),
             ],
             path: "Tests/Support"
         ),
         .testTarget(
-            name: "String Primitives Tests",
+            name: "String Tests",
             dependencies: [
-                "String Primitives",
-                "String Primitives Test Support",
+                "String",
+                "String Test Support",
             ]
         ),
     ],

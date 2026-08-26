@@ -1,7 +1,7 @@
-#if STRING_PRIMITIVES_AVAILABLE && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux) || os(Android) || os(OpenBSD) || os(Windows))
+#if STRING_AVAILABLE && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux) || os(Android) || os(OpenBSD) || os(Windows))
 
-    public import Memory_Heap_Primitives
-    public import Span_Protocol_Primitives
+    public import Memory_Heap
+    public import Span_Protocol
 
     @safe
     public struct String: ~Copyable, Sendable {
