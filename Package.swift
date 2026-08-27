@@ -27,15 +27,25 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-molecules/swift-memory-heap.git",
+            url: "https://github.com/swift-atoms/swift-memory.git",
             branch: "main"
-        )
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-tagged.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-atoms/swift-cardinal.git",
+            branch: "main"
+        ),
     ],
     targets: [
         .target(
             name: "String",
             dependencies: [
-                .product(name: "Memory Heap", package: "swift-memory-heap")
+                .product(name: "Memory", package: "swift-memory"),
+                .product(name: "Tagged", package: "swift-tagged"),
+                .product(name: "Cardinal", package: "swift-cardinal"),
             ],
             swiftSettings: [
                 .define(
