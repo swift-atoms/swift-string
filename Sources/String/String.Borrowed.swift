@@ -1,5 +1,9 @@
 #if STRING_AVAILABLE && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux) || os(Android) || os(OpenBSD) || os(Windows))
 
+    public import Ownership
+
+    extension String: Ownership.Borrow.`Protocol` {}
+
     extension String {
 
         @safe

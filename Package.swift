@@ -17,25 +17,25 @@ let package = Package(
             targets: ["String"]
         ),
         .library(
-            name: "String Standard Library Integration",
-            targets: ["String Standard Library Integration"]
-        ),
-        .library(
-            name: "String Apple Foundation Integration",
-            targets: ["String Apple Foundation Integration"]
+            name: "String Test Support",
+            targets: ["String Test Support"]
         ),
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-atoms/swift-memory.git",
+            url: "https://github.com/swift-molecules/swift-memory-heap.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-atoms/swift-tagged.git",
+            url: "https://github.com/swift-molecules/swift-span.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-atoms/swift-cardinal.git",
+            url: "https://github.com/swift-molecules/swift-tagged.git",
+            branch: "main"
+        ),
+        .package(
+            url: "https://github.com/swift-molecules/swift-ownership.git",
             branch: "main"
         ),
     ],
@@ -43,9 +43,10 @@ let package = Package(
         .target(
             name: "String",
             dependencies: [
-                .product(name: "Memory", package: "swift-memory"),
+                .product(name: "Memory Heap", package: "swift-memory-heap"),
+                .product(name: "Span Protocol", package: "swift-span"),
                 .product(name: "Tagged", package: "swift-tagged"),
-                .product(name: "Cardinal", package: "swift-cardinal"),
+                .product(name: "Ownership", package: "swift-ownership"),
             ],
             swiftSettings: [
                 .define(
@@ -58,19 +59,22 @@ let package = Package(
             ]
         ),
         .target(
-            name: "String Standard Library Integration",
-            dependencies: ["String"]
-        ),
-        .target(
-            name: "String Apple Foundation Integration",
+            name: "String Test Support",
             dependencies: [
                 "String",
-                "String Standard Library Integration",
-            ]
+                .product(
+                    name: "Tagged Test Support",
+                    package: "swift-tagged"
+                ),
+            ],
+            path: "Tests/Support"
         ),
         .testTarget(
             name: "String Tests",
-            dependencies: ["String"]
+            dependencies: [
+                "String",
+                "String Test Support",
+            ]
         ),
     ],
     swiftLanguageModes: [.v6]

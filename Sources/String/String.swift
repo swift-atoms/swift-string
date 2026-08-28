@@ -1,8 +1,7 @@
 #if STRING_AVAILABLE && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux) || os(Android) || os(OpenBSD) || os(Windows))
 
-    public import Cardinal
-    public import Memory
-    public import Tagged
+    public import Memory_Heap
+    public import Span_Protocol
 
     @safe
     public struct String: ~Copyable, Sendable {
@@ -15,7 +14,7 @@
 
         @inlinable
         public var count: Int {
-            let byteCount = Int(bitPattern: _storage.capacity.underlying.rawValue)
+            let byteCount = Int(bitPattern: _storage.capacity)
             return byteCount / MemoryLayout<Char>.stride
         }
     }
@@ -32,7 +31,7 @@
             #endif
             unsafe self._storage = Memory.Heap(
                 adopting: UnsafeMutableRawPointer(pointer),
-                capacity: Memory.Address.Count(_unchecked: Cardinal(UInt(count) * UInt(MemoryLayout<Char>.stride)))
+                capacity: Memory.Address.Count(UInt(count) * UInt(MemoryLayout<Char>.stride))
             )
         }
 
@@ -44,7 +43,7 @@
             (unsafe buffer)[length] = Self.terminator
             unsafe self._storage = Memory.Heap(
                 adopting: UnsafeMutableRawPointer(buffer),
-                capacity: Memory.Address.Count(_unchecked: Cardinal(UInt(length) * UInt(MemoryLayout<Char>.stride)))
+                capacity: Memory.Address.Count(UInt(length) * UInt(MemoryLayout<Char>.stride))
             )
         }
 
@@ -56,7 +55,7 @@
             (unsafe buffer)[length] = Self.terminator
             unsafe self._storage = Memory.Heap(
                 adopting: UnsafeMutableRawPointer(buffer),
-                capacity: Memory.Address.Count(_unchecked: Cardinal(UInt(length) * UInt(MemoryLayout<Char>.stride)))
+                capacity: Memory.Address.Count(UInt(length) * UInt(MemoryLayout<Char>.stride))
             )
         }
 
@@ -77,7 +76,7 @@
             (unsafe buffer)[length] = Self.terminator
             unsafe self._storage = Memory.Heap(
                 adopting: UnsafeMutableRawPointer(buffer),
-                capacity: Memory.Address.Count(_unchecked: Cardinal(UInt(length) * UInt(MemoryLayout<Char>.stride)))
+                capacity: Memory.Address.Count(UInt(length) * UInt(MemoryLayout<Char>.stride))
             )
         }
 
@@ -130,13 +129,15 @@
         public consuming func take() -> (pointer: UnsafeMutablePointer<String.Char>, count: Int) {
 
             let (raw, byteCapacity) = unsafe _storage.take()
-            let byteCount = Int(bitPattern: byteCapacity.underlying.rawValue)
+            let byteCount = Int(bitPattern: byteCapacity)
             return unsafe (
                 raw.assumingMemoryBound(to: Char.self),
                 byteCount / MemoryLayout<Char>.stride
             )
         }
     }
+
+    extension String: Span.`Protocol` {}
 
     extension String {
 
