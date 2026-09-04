@@ -1,6 +1,6 @@
 #if STRING_AVAILABLE && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux) || os(Android) || os(OpenBSD) || os(Windows))
 
-    public import Memory_Heap
+    public import Memory
     public import Span_Protocol
 
     @safe
