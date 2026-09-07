@@ -1,7 +1,7 @@
 #if STRING_AVAILABLE && (os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS) || os(Linux) || os(Android) || os(OpenBSD) || os(Windows))
 
     public import Tagged
-    public import Span_Protocol
+    public import Span
 
     extension Tagged where Underlying == String, Tag: ~Copyable & ~Escapable {
 

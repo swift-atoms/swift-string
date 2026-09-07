@@ -44,7 +44,7 @@ let package = Package(
             name: "String",
             dependencies: [
                 .product(name: "Memory", package: "swift-memory"),
-                .product(name: "Span Protocol", package: "swift-span"),
+                .product(name: "Span", package: "swift-span"),
                 .product(name: "Tagged", package: "swift-tagged"),
                 .product(name: "Ownership", package: "swift-ownership"),
             ],
