@@ -27,15 +27,15 @@ let package = Package(
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-span.git",
+            url: "https://github.com/swift-atoms/swift-span.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-tagged.git",
+            url: "https://github.com/swift-atoms/swift-tagged.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-molecules/swift-ownership.git",
+            url: "https://github.com/swift-atoms/swift-ownership.git",
             branch: "main"
         ),
     ],
@@ -72,6 +72,9 @@ let package = Package(
         .testTarget(
             name: "String Tests",
             dependencies: [
+                .product(name: "Ownership", package: "swift-ownership"),
+                .product(name: "Span", package: "swift-span"),
+                .product(name: "Tagged", package: "swift-tagged"),
                 "String",
                 "String Test Support",
             ]
