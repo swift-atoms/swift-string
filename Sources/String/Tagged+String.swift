@@ -44,11 +44,11 @@
         public var count: Int { underlying.count }
 
         @inlinable
-        public var span: Swift.Span<String.Char> {
+        public var span: Swift::Span<String.Char> {
             @_lifetime(borrow self) borrowing get {
                 let pointer = unsafe underlying.unsafeBaseAddress
                 let count = underlying.count
-                let span = unsafe Swift.Span(_unsafeStart: pointer, count: count)
+                let span = unsafe Swift::Span(_unsafeStart: pointer, count: count)
                 return unsafe _overrideLifetime(span, borrowing: self)
             }
         }
@@ -77,7 +77,7 @@
     extension Tagged where Underlying == String, Tag: ~Copyable & ~Escapable {
 
         @inlinable
-        public func withUnsafeBufferPointer<R, E: Swift.Error>(
+        public func withUnsafeBufferPointer<R, E: Swift::Error>(
             _ body: (UnsafeBufferPointer<String.Char>) throws(E) -> R
         ) throws(E) -> R {
             try unsafe underlying.withUnsafeBufferPointer(body)

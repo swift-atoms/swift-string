@@ -48,7 +48,7 @@
         }
 
         @inlinable
-        public init(_ span: Swift.Span<Char>) {
+        public init(_ span: Swift::Span<Char>) {
             let length = span.count
             let buffer = UnsafeMutablePointer<Char>.allocate(capacity: length + 1)
             (0..<length).forEach { i in (unsafe buffer)[i] = span[i] }
@@ -68,7 +68,7 @@
                     let byte = unsafe utf8[i]
                     precondition(
                         byte < 0x80,
-                        "String.init(ascii:): literal contains non-ASCII byte 0x\(Swift.String(byte, radix: 16, uppercase: true)) at index \(i)"
+                        "String.init(ascii:): literal contains non-ASCII byte 0x\(Swift::String(byte, radix: 16, uppercase: true)) at index \(i)"
                     )
                     (unsafe buffer)[i] = Self.Char(byte)
                 }
@@ -93,7 +93,7 @@
 
         @unsafe
         @inlinable
-        public borrowing func withUnsafePointer<R: ~Copyable, E: Swift.Error>(
+        public borrowing func withUnsafePointer<R: ~Copyable, E: Swift::Error>(
             _ body: (UnsafePointer<String.Char>) throws(E) -> R
         ) throws(E) -> R {
             try unsafe body(_base)
@@ -114,9 +114,9 @@
         }
 
         @inlinable
-        public var span: Swift.Span<String.Char> {
+        public var span: Swift::Span<String.Char> {
             @_lifetime(borrow self) borrowing get {
-                let s = unsafe Swift.Span(_unsafeStart: _base, count: count)
+                let s = unsafe Swift::Span(_unsafeStart: _base, count: count)
                 return unsafe _overrideLifetime(s, borrowing: self)
             }
         }
@@ -142,7 +142,7 @@
     extension String {
 
         @inlinable
-        public func withUnsafeBufferPointer<R, E: Swift.Error>(
+        public func withUnsafeBufferPointer<R, E: Swift::Error>(
             _ body: (UnsafeBufferPointer<Char>) throws(E) -> R
         ) throws(E) -> R {
             try unsafe body(UnsafeBufferPointer(start: _base, count: count))

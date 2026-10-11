@@ -61,7 +61,7 @@ let package = Package(
         .target(
             name: "String Test Support",
             dependencies: [
-                "String",
+                .target(name: "String"),
                 .product(
                     name: "Tagged Test Support",
                     package: "swift-tagged"
@@ -75,8 +75,8 @@ let package = Package(
                 .product(name: "Ownership", package: "swift-ownership"),
                 .product(name: "Span", package: "swift-span"),
                 .product(name: "Tagged", package: "swift-tagged"),
-                "String",
-                "String Test Support",
+                .target(name: "String"),
+                .target(name: "String Test Support"),
             ]
         ),
     ],
