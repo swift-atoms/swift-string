@@ -13,7 +13,7 @@ extension `String Tests`.Unit {
     @Test
     func `length of empty string`() {
         let empty: [String.Char] = [String.terminator]
-        unsafe empty.withUnsafeBufferPointer { buffer in
+        empty.withUnsafeBufferPointer { buffer in
             let length = unsafe String.length(of: buffer.baseAddress!)
             #expect(length == 0)
         }
@@ -25,7 +25,7 @@ extension `String Tests`.Unit {
         let hello: [String.Char] = [
             104, 101, 108, 108, 111, String.terminator,
         ]
-        unsafe hello.withUnsafeBufferPointer { buffer in
+        hello.withUnsafeBufferPointer { buffer in
             let length = unsafe String.length(of: buffer.baseAddress!)
             #expect(length == 5)
         }

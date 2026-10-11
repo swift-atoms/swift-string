@@ -5,7 +5,7 @@ import Testing
 struct `String edge cases` {
 
     static func codeUnits(_ value: borrowing String) -> [String.Char] {
-        value.withUnsafeBufferPointer { buffer in Array(unsafe buffer) }
+        unsafe value.withUnsafeBufferPointer { buffer in unsafe Array(buffer) }
     }
 
     static func terminator(of value: borrowing String) -> String.Char {
@@ -49,8 +49,9 @@ struct `String edge cases` {
     @Test
     func `taking the buffer hands over the code units and the terminator`() {
         let taken = unsafe String(ascii: "take").take()
-        #expect(taken.count == 4)
-        #expect(unsafe Array(UnsafeBufferPointer(start: taken.pointer, count: taken.count)) == [0x74, 0x61, 0x6B, 0x65] as [String.Char])
+        #expect(unsafe taken.count == 4)
+        let codeUnits = unsafe Array(UnsafeBufferPointer(start: taken.pointer, count: taken.count))
+        #expect(codeUnits == [0x74, 0x61, 0x6B, 0x65] as [String.Char])
         #expect(unsafe taken.pointer[taken.count] == String.terminator)
         unsafe taken.pointer.deallocate()
     }
