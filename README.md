@@ -11,4 +11,4 @@ Use this package when you need to own, borrow or hand over a null-terminated pla
 - `take()` gives up ownership: the returned pointer still ends in its terminator, the `String` no longer frees it, and the caller must `deallocate()` it.
 - `init(copying:)` and `init(_:)` from a span always allocate a new buffer of `count + 1` code units and write the terminator; they never share the source's memory.
 - `init(ascii:)` traps in every build if the literal contains a byte of 0x80 or above.
-- `String.Borrowed` checks its pointer for a terminator only in debug builds, and only within the first 16 MiB. It never checks that `count` matches where the terminator is.
+- `String.Borrowed` checks its pointer for a terminator only in debug builds, and only within the first 16 Mi code units, which is 32 MiB on Windows. It never checks that `count` matches where the terminator is.
