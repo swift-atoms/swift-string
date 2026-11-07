@@ -2,8 +2,8 @@ import Ownership
 import String
 import Testing
 
-@Suite("String × Ownership")
-struct String_Ownership_Tests {
+@Suite
+struct `String × Ownership` {
 
     static func acceptsBorrowProtocol<R: Ownership.Borrow.`Protocol` & ~Copyable>(
         _ value: borrowing R

@@ -2,8 +2,8 @@ import Span
 import String
 import Testing
 
-@Suite("String × Span")
-struct String_Span_Tests {
+@Suite
+struct `String × Span` {
 
     static func count<R: Span.`Protocol` & ~Copyable>(
         _ region: borrowing R
