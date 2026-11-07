@@ -2,28 +2,32 @@ import Span
 import String
 import Testing
 
-@Suite
-struct `String × Span` {
+enum `String Span Tests` {}
 
-    static func count<R: Span.`Protocol` & ~Copyable>(
-        _ region: borrowing R
-    ) -> Int {
-        region.span.count
-    }
+extension `String Span Tests` {
+    @Suite
+    struct `String × Span` {
 
-    @Test
-    func `String satisfies Span Protocol`() {
-        let value = String(ascii: "hello")
-        #expect(Self.count(value) == 5)
-    }
+        static func count<R: Span.`Protocol` & ~Copyable>(
+            _ region: borrowing R
+        ) -> Int {
+            region.span.count
+        }
 
-    @Test
-    func `String span exposes its code units`() {
-        let value = String(ascii: "span")
-        let span = value.span
+        @Test
+        func `String satisfies Span Protocol`() {
+            let value = String(ascii: "hello")
+            #expect(Self.count(value) == 5)
+        }
 
-        #expect(span.count == 4)
-        #expect(span[0] == String.Char(115))
-        #expect(span[3] == String.Char(110))
+        @Test
+        func `String span exposes its code units`() {
+            let value = String(ascii: "span")
+            let span = value.span
+
+            #expect(span.count == 4)
+            #expect(span[0] == String.Char(115))
+            #expect(span[3] == String.Char(110))
+        }
     }
 }
