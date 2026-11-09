@@ -39,7 +39,14 @@
         public init(copying view: borrowing String.Borrowed) {
             let length = view.count
             let buffer = UnsafeMutablePointer<String.Char>.allocate(capacity: length + 1)
-            unsafe buffer.initialize(from: view.pointer, count: length)
+            (0..<length).forEach { i in
+                let unit = unsafe view.pointer[i]
+                precondition(
+                    unit != Self.terminator,
+                    "String.init(copying:): contents contain a NUL code unit at index \(i)"
+                )
+                (unsafe buffer)[i] = unit
+            }
             (unsafe buffer)[length] = Self.terminator
             unsafe self._storage = Memory.Heap(
                 adopting: UnsafeMutableRawPointer(buffer),
@@ -51,7 +58,14 @@
         public init(_ span: Swift::Span<Char>) {
             let length = span.count
             let buffer = UnsafeMutablePointer<Char>.allocate(capacity: length + 1)
-            (0..<length).forEach { i in (unsafe buffer)[i] = span[i] }
+            (0..<length).forEach { i in
+                let unit = span[i]
+                precondition(
+                    unit != Self.terminator,
+                    "String.init(_:): contents contain a NUL code unit at index \(i)"
+                )
+                (unsafe buffer)[i] = unit
+            }
             (unsafe buffer)[length] = Self.terminator
             unsafe self._storage = Memory.Heap(
                 adopting: UnsafeMutableRawPointer(buffer),
@@ -69,6 +83,10 @@
                     precondition(
                         byte < 0x80,
                         "String.init(ascii:): literal contains non-ASCII byte 0x\(Swift::String(byte, radix: 16, uppercase: true)) at index \(i)"
+                    )
+                    precondition(
+                        byte != 0,
+                        "String.init(ascii:): literal contains a NUL code unit at index \(i)"
                     )
                     (unsafe buffer)[i] = Self.Char(byte)
                 }

@@ -67,5 +67,33 @@ extension `String Edge Case Tests` {
             #expect(adopted.count == 2)
             #expect(Self.codeUnits(adopted) == [0x68, 0x69])
         }
+
+        @Test
+        func `a span with an interior NUL code unit is rejected`() async {
+            await #expect(processExitsWith: .failure) {
+                let units: [String.Char] = [0x61, String.terminator, 0x62]
+                _ = String(units.span)
+            }
+        }
+
+        @Test
+        func `copying a view with an interior NUL code unit is rejected`() async {
+            await #expect(processExitsWith: .failure) {
+                let buffer = UnsafeMutablePointer<String.Char>.allocate(capacity: 4)
+                unsafe buffer.initialize(
+                    from: [String.Char(0x61), String.terminator, String.Char(0x62), String.terminator],
+                    count: 4
+                )
+                let view = unsafe String.Borrowed(UnsafePointer(buffer), count: 3)
+                _ = String(copying: view)
+            }
+        }
+
+        @Test
+        func `an ascii literal with an interior NUL code unit is rejected`() async {
+            await #expect(processExitsWith: .failure) {
+                _ = String(ascii: "a\0b")
+            }
+        }
     }
 }
