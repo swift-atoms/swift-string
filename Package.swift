@@ -47,15 +47,6 @@ let package = Package(
                 .product(name: "Span", package: "swift-span"),
                 .product(name: "Tagged", package: "swift-tagged"),
                 .product(name: "Ownership", package: "swift-ownership"),
-            ],
-            swiftSettings: [
-                .define(
-                    "STRING_AVAILABLE",
-                    .when(platforms: [
-                        .macOS, .iOS, .tvOS, .watchOS, .visionOS,
-                        .linux, .windows, .android, .openbsd,
-                    ])
-                )
             ]
         ),
         .target(
