@@ -1,5 +1,5 @@
-public import Tagged
 public import Span
+public import Tagged
 
 extension Tagged where Underlying == String, Tag: ~Copyable & ~Escapable {
 
@@ -81,4 +81,3 @@ extension Tagged where Underlying == String, Tag: ~Copyable & ~Escapable {
         try unsafe underlying.withUnsafeBufferPointer(body)
     }
 }
-

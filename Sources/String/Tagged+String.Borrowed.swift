@@ -12,4 +12,3 @@ extension Tagged where Underlying == String, Tag: ~Copyable & ~Escapable {
         }
     }
 }
-

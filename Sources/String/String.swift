@@ -197,4 +197,3 @@ extension String {
         return unsafe current - pointer
     }
 }
-
